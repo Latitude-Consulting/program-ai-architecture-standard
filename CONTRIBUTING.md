@@ -6,7 +6,7 @@ This standard is published as a **Request for Comments**. A standard nobody argu
 
 1. **One issue per point of feedback.** Open an [Issue](../../issues/new/choose) using the RFC Comment template. Reference the conformance point or section you're addressing.
 2. **Argue from your context.** "This fails in a bank because..." beats "I disagree." The failure stories are the value.
-3. **Pull requests welcome** for the Markdown version (typos, clarity, added evidence). Substantive changes to the standard itself go through an issue first, so the discussion is on the record.
+3. **All change proposals go through Issues** - including typo fixes and proposed replacement language (use the "Proposed change" field in the template). This keeps every proposal, and the argument behind it, in one auditable record. Pull requests will be politely closed and redirected to an issue.
 4. **Comment period closes October 1, 2026.** v1.1 ships Q4 2026. Every accepted contribution is credited by name in the v1.1 changelog and acknowledgments.
 
 ## Where disagreement is most valuable
