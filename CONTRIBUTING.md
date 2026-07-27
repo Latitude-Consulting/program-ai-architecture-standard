@@ -17,6 +17,14 @@ This standard is published as a **Request for Comments**. A standard nobody argu
 - Regulated industries: what would conformance **evidence** need to look like for your regulator?
 - Graph access control is the weakest tier in practice. If you've solved node-level security at enterprise scale, the community needs your war story.
 
+## Feedback license and ownership
+
+Short version: your ideas make the standard better, your name goes on the standard, and the standard keeps a single copyright owner — which is what lets it be republished, licensed, and submitted to standards bodies without chasing signatures from every contributor.
+
+By submitting feedback, comments, critiques, proposed language, or suggested edits to the Program AI Architecture Standard — via GitHub Issues, LinkedIn, direct message, email, or any other channel — you grant Anthony Filipovich / Latitude Consulting Inc. a perpetual, irrevocable, worldwide, royalty-free, non-exclusive license to incorporate, adapt, and publish those suggestions in current and future versions of the Standard and works derived from it (including under the Standard's CC BY 4.0 license).
+
+Inclusion in the Contributors or acknowledgments list is **peer recognition of review contributions only** — it does not constitute co-authorship, co-ownership, or any transfer of copyright. The author remains the sole copyright owner of the work. If you do not agree to these terms, please do not submit feedback.
+
 ## Ground rules
 
 Vendor pitches will be closed without comment. Anonymized war stories are gold. Attribution for accepted contributions uses the name on your GitHub profile unless you request otherwise.
