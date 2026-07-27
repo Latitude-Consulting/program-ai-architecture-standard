@@ -1,6 +1,6 @@
 # The Program AI Architecture Standard
 
-**Version 1.0 - Request for Comments** - Comment period through October 1, 2026 - [How to comment](CONTRIBUTING.md) - [License: CC BY 4.0](LICENSE.md)
+**Version 1.1 (draft) - Request for Comments** - v1.0 published July 2026; this draft is revised in public from reviewer feedback - Comment period through October 1, 2026 - [How to comment](CONTRIBUTING.md) - [License: CC BY 4.0](LICENSE.md)
 
 *Anthony Filipovich - Latitude Consulting*
 
@@ -37,7 +37,21 @@ A program office conforms when it can answer yes to all ten. Self-assessed in an
 
 Points 1-3 govern what the AI may claim. Points 4-7 govern what an agent may do. Points 8-10 make the whole thing observable and defensible to the people who fund it.
 
-## 3. The reference architecture
+## 3. Who owns this architecture
+
+Three roles, and the distinction between them is what makes ownership real rather than ceremonial.
+
+**The Program Manager owns the architecture** - accountable for what it produces, for its conformance to this standard, and for the decisions made on its outputs. Ownership here means what it means everywhere else in the role: PMs own budgets without being accountants and own delivery without writing code. Own ≠ build.
+
+**A build partner constructs it.** The extraction pipelines, the context stack, and the data contracts (layers 2-3) are engineering work, done by engineers sitting close enough to the program to build against its reality rather than a generic spec. A PM "owning" an architecture with no build partner isn't an owner - they're a signature.
+
+**The PMO owns the standard, not the instances.** Each program runs its own conforming stack, the way each program runs its own budget under one set of financial rules. Uniformity comes from conformance, not centralization.
+
+And the guard that keeps ownership from decaying into rubber-stamping: **the PM verifies outputs, not pipes.** Every number resolves to a query in a system of record (point 1); every claim carries provenance the reader can click back to (point 3). The PM never needs to read the code to check the number. If the PM can't check it, the build isn't done.
+
+*Added during the v1.0 comment period, prompted by review feedback from George Tohme (CrashTestApps.DEV).*
+
+## 4. The reference architecture
 
 ![Reference architecture](assets/reference-architecture.png)
 
@@ -50,7 +64,7 @@ Six layers, each a distinct concern, plus cross-cutting controls at every layer:
 5. **Synthesis** - the cross-project reasoning layer producing the program views: critical path, risk, resources, benefits, narrative - every claim cited.
 6. **Applications** - what humans consume. Applications render intelligence; the stack owns it.
 
-## 4. Principle - The Hybrid Context Stack (points 1-2)
+## 5. Principle - The Hybrid Context Stack (points 1-2)
 
 Pure vector RAG fails program work three predictable ways. **Numbers hallucinate** - vector retrieval is fuzzy by design; "approximately $2-3M" is not $2.34M, and executives discard AI the first time they catch a wrong number. **Relationships dissolve** - dependencies, change cascades, and traceability are graphs; embeddings approximate them. **State drifts** - "is this milestone approved?" deserves a deterministic answer, not a similarity score.
 
@@ -66,7 +80,7 @@ These are **logical roles, not a vendor count**. Whether they run on three speci
 
 **The system-of-record rule.** Every entity declares one canonical tier. A risk is simultaneously a SQL row, a graph node, and a narrative; the other two are projections carrying provenance back to the canonical record. Pipelines are the only writers of projections, and cross-tier reconciliation runs continuously.
 
-## 5. Principle - Provenance travels with everything (point 3)
+## 6. Principle - Provenance travels with everything (point 3)
 
 Five metadata fields are non-negotiable on every fact, traversal, and chunk an AI touches:
 
@@ -78,14 +92,14 @@ Five metadata fields are non-negotiable on every fact, traversal, and chunk an A
 
 Scope isolation is enforced, not assumed: row-level security in SQL, mandatory metadata filters on every vector query (cross-project semantic similarity is a leak channel), and node-level controls in the graph - the tier where access control is historically weakest.
 
-## 6. Principle - Open protocols, not proprietary glue (point 9)
+## 7. Principle - Open protocols, not proprietary glue (point 9)
 
 - **MCP (Model Context Protocol)** connects agents to data and tools. Each stack layer is exposed as an MCP server - one standard interface for any agent from any vendor.
 - **A2A (Agent2Agent)** connects agents to each other: capability cards, discovery, authentication, delegation. Governed by the Linux Foundation.
 
 A standard made of storage roles, open protocols, and controls - with zero mandatory products - is a standard any company can adopt without procurement getting a vote first.
 
-## 7. Principle - Agents are bounded and contracted (point 4)
+## 8. Principle - Agents are bounded and contracted (point 4)
 
 Every agent is a five-line statement - **purpose, scope, stack reads, allowed actions, autonomy level** - and if any of the five is missing, the agent is not production-ready. Behind the five lines sits a data contract: triggers; the exact bundle read from each tier; required metadata; outputs with reasoning chains; and guardrails.
 
@@ -93,11 +107,11 @@ Every agent is a five-line statement - **purpose, scope, stack reads, allowed ac
 
 Two design rules: agents that read but never write are pipelines misnamed as agents; and intelligence emerges from how narrow agents are wired together - never from making one agent omniscient.
 
-## 8. Principle - Every agent is an identity (point 5)
+## 9. Principle - Every agent is an identity (point 5)
 
 Classic IAM knows humans and service accounts; agents are neither. Every agent runs under its own first-class non-human identity: its own credentials, just-in-time scoped tokens matched to its data contract, lifecycle management, revocation at retirement. This turns "bounded actions" from an aspiration into an enforced property. Stepping stone for early adopters: one dedicated, scoped service account per agent - never shared, never borrowed from a human.
 
-## 9. Principle - The autonomy ladder (point 7)
+## 10. Principle - The autonomy ladder (point 7)
 
 Every agent action is assigned one of four levels, recorded in its contract:
 
@@ -110,17 +124,17 @@ Every agent action is assigned one of four levels, recorded in its contract:
 
 Promotion is **earned, not configured** - an action moves up only after passing its evaluation gates over a declared period, and some actions are capped permanently. The ladder answers the only question executives actually ask: *what can the AI do without asking?*
 
-## 10. Principle - The evaluation harness (point 6)
+## 11. Principle - The evaluation harness (point 6)
 
 The harness is to agents what UAT is to software. Four elements: a **golden dataset** per agent (real inputs with known-correct outputs: happy paths, edge cases, adversarial cases); a **deployment gate** (evals gate initial deployment, every model or prompt change, and every autonomy promotion); a **regression cadence** (full re-runs at least weekly to catch drift); and **LLM-as-judge** for generated narratives, human-sampled for calibration.
 
-## 11. Principle - Observable, breakered, and governed (points 8, 10)
+## 12. Principle - Observable, breakered, and governed (points 8, 10)
 
 Every agent action is logged with agent identity, trigger conditions, and inputs - emitted in **OpenTelemetry GenAI** format, riding the observability platform the enterprise already runs. Multi-agent chains get circuit breakers: maximum chain depth, per-item cooldowns, idempotent actions.
 
 The control set maps onto **ISO/IEC 42001** and the **NIST AI RMF** functions (Govern, Map, Measure, Manage). Neither framework was designed for autonomous agents; the ladder and the harness are this standard's extension where formal standards are still catching up.
 
-## 12. Adoption - Good, Better, Best
+## 13. Adoption - Good, Better, Best
 
 - **Good (months 1-3).** The SQL system of record you already have plus lightweight vector search over documents. One scoped service account per AI process. Start the golden datasets.
 - **Better (months 4-9).** Add the dependency graph (relational tables are a fine start), the first contracted agents at L1-L2, MCP interfaces, and eval gates on everything that ships.
@@ -128,7 +142,13 @@ The control set maps onto **ISO/IEC 42001** and the **NIST AI RMF** functions (G
 
 Each level is a defensible stopping point. The ten-point test tells you exactly where you are - that is what makes this a standard rather than an aspiration.
 
-## 13. Sources
+## 14. Authorship and contributors
+
+This Standard has a single author and copyright owner: Anthony Filipovich, Latitude Consulting Inc. The author gratefully acknowledges the practitioners credited in the changelog and the v1.1 acknowledgments for their peer review, feedback, and structural critiques during the RFC process. Contributor credit is peer recognition of review contributions; it does not constitute co-authorship or co-ownership of the work.
+
+By submitting feedback, comments, or suggested edits through any channel, reviewers grant the author a perpetual, irrevocable, worldwide, royalty-free, non-exclusive license to incorporate, adapt, and publish those suggestions in current and future versions of the Standard. See [CONTRIBUTING](CONTRIBUTING.md) for the full terms.
+
+## 15. Sources
 
 McKinsey, *The State of AI* (2025) and *State of AI Trust in 2026* - Gartner agentic-AI forecasts (2025-2026) - Anthropic, *Building Effective Agents* (2024) - Linux Foundation, A2A Protocol (2025-2026) - Model Context Protocol (modelcontextprotocol.io) - OpenTelemetry GenAI semantic conventions (2026) - Rasmussen et al., *Zep: A Temporal Knowledge Graph Architecture for Agent Memory*, arXiv:2501.13956 - ISO/IEC 42001 - NIST AI Risk Management Framework - EU AI Act implementation timeline (artificialintelligenceact.eu).
 
